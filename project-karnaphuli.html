@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Karnaphuli Water Quality — Mahima Yusuf Tarana</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream:#F5EFE4; --cream-light:#FBF7F1; --warm-brown:#5C3D2E;
+    --mid-brown:#8B5E3C; --teal:#2D6A6A; --teal-light:#3D8A8A;
+    --teal-pale:#E0F0EF; --sand:#C9A97A; --sand-light:#E8D5B5;
+    --dark:#2A1F14; --text-muted:#7A6652; --border:rgba(92,61,46,0.15);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream-light); color:var(--dark); line-height:1.7; }
+
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(251,247,241,0.93); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; height:62px; }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:var(--warm-brown); text-decoration:none; }
+  .nav-back { font-size:0.8rem; color:var(--teal); text-decoration:none; }
+  .nav-back:hover { text-decoration:underline; }
+
+  .page-wrap { max-width:900px; margin:0 auto; padding:8rem 2.5rem 5rem; }
+
+  .project-eyebrow { font-size:0.75rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); margin-bottom:0.75rem; }
+  .project-h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,4.5vw,3.6rem); font-weight:300; color:var(--warm-brown); line-height:1.08; margin-bottom:0.9rem; }
+  .project-subtitle { font-size:0.97rem; color:var(--text-muted); max-width:680px; font-weight:300; margin-bottom:2rem; }
+
+  .meta-row { display:flex; flex-wrap:wrap; gap:2rem; padding:1.4rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-bottom:2.5rem; }
+  .meta-item label { font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:0.25rem; }
+  .meta-item span { font-size:0.86rem; color:var(--dark); }
+  .tool-pills { display:flex; flex-wrap:wrap; gap:0.35rem; }
+  .tool-pill { font-size:0.72rem; padding:0.22rem 0.65rem; background:var(--teal-pale); color:var(--teal); border-radius:3px; }
+
+  h2 { font-family:'Cormorant Garamond',serif; font-size:1.55rem; font-weight:600; color:var(--warm-brown); margin-bottom:0.85rem; margin-top:2.5rem; }
+  h3 { font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal); margin-bottom:0.6rem; margin-top:1.75rem; }
+  p { color:var(--text-muted); margin-bottom:0.9rem; font-weight:300; font-size:0.93rem; }
+  ul { list-style:none; padding:0; margin-bottom:1rem; }
+  ul li { padding:0.38rem 0 0.38rem 1.4rem; position:relative; color:var(--text-muted); font-size:0.9rem; font-weight:300; }
+  ul li::before { content:'→'; position:absolute; left:0; color:var(--teal); font-size:0.78rem; top:0.54rem; }
+  hr { border:none; border-top:1px solid var(--border); margin:2.5rem 0; }
+
+  /* WHAT I DID STEPS */
+  .steps { display:flex; flex-direction:column; gap:0; margin:1.25rem 0; }
+  .step { display:flex; align-items:flex-start; gap:1.2rem; position:relative; }
+  .step:not(:last-child)::after { content:''; position:absolute; left:19px; top:40px; bottom:-1px; width:1px; background:var(--sand-light); }
+  .step-icon { width:40px; height:40px; border-radius:50%; background:var(--teal-pale); border:1.5px solid var(--teal); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.72rem; font-weight:500; color:var(--teal); z-index:1; }
+  .step-body { padding:0 0 1.75rem; flex:1; }
+  .step-label { font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal); margin-bottom:0.2rem; }
+  .step-desc { font-size:0.87rem; color:var(--text-muted); font-weight:300; }
+
+  /* MODEL PERFORMANCE TABLE */
+  .perf-table { width:100%; border-collapse:collapse; margin:1rem 0 0.5rem; font-size:0.83rem; }
+  .perf-table th { text-align:left; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); padding:0.5rem 0.75rem; border-bottom:1px solid var(--sand-light); font-weight:400; }
+  .perf-table td { padding:0.55rem 0.75rem; border-bottom:1px solid var(--border); color:var(--dark); }
+  .perf-table td:first-child { color:var(--text-muted); }
+  .perf-table td.r2 { font-weight:500; color:var(--teal); }
+  .perf-table tr:last-child td { border-bottom:none; }
+  .perf-table .best { background:rgba(45,106,106,0.06); }
+  .r2-bar-wrap { display:flex; align-items:center; gap:0.6rem; }
+  .r2-bar { height:7px; border-radius:4px; background:var(--teal); opacity:0.7; }
+
+  /* MAP IMAGES */
+  .map-block { margin:1.5rem 0; }
+  .map-label { font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.6rem; }
+  .map-caption { font-size:0.8rem; color:var(--text-muted); margin-top:0.6rem; font-style:italic; }
+  .map-block img { width:100%; border-radius:10px; border:1px solid var(--sand-light); display:block; }
+
+  /* EXCEEDANCE TABLE */
+  .exc-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.83rem; }
+  .exc-table th { text-align:left; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); padding:0.5rem 0.75rem; border-bottom:1px solid var(--sand-light); font-weight:400; }
+  .exc-table td { padding:0.52rem 0.75rem; border-bottom:1px solid var(--border); color:var(--dark); font-size:0.82rem; }
+  .exc-table td:first-child { color:var(--text-muted); }
+  .exc-table tr:last-child td { border-bottom:none; }
+  .badge-warn { font-size:0.68rem; background:#FFF3E0; color:#B45309; border-radius:3px; padding:0.1rem 0.45rem; }
+  .badge-ok { font-size:0.68rem; background:var(--teal-pale); color:var(--teal); border-radius:3px; padding:0.1rem 0.45rem; }
+
+  /* FUNDING BOX */
+  .context-box { background:var(--cream); border-left:3px solid var(--teal); border-radius:0 8px 8px 0; padding:1.2rem 1.5rem; margin:1.5rem 0; }
+  .context-box p { margin:0; font-size:0.88rem; }
+
+  .btn-row { display:flex; flex-wrap:wrap; gap:1rem; margin-top:2.5rem; }
+  .btn-primary { display:inline-flex; align-items:center; gap:0.5rem; background:var(--warm-brown); color:#fff; padding:0.72rem 1.75rem; border-radius:6px; text-decoration:none; font-size:0.84rem; transition:background 0.2s; }
+  .btn-primary:hover { background:var(--mid-brown); }
+  .btn-outline { display:inline-flex; align-items:center; gap:0.5rem; border:1px solid var(--warm-brown); color:var(--warm-brown); padding:0.72rem 1.75rem; border-radius:6px; text-decoration:none; font-size:0.84rem; transition:all 0.2s; }
+  .btn-outline:hover { background:var(--warm-brown); color:#fff; }
+
+  footer { background:var(--warm-brown); color:var(--sand-light); text-align:center; padding:1.75rem; font-size:0.8rem; }
+  footer a { color:var(--sand); text-decoration:none; }
+
+  @media(max-width:680px){ .page-wrap{padding:6rem 1.25rem 4rem;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">M. Y. Tarana</a>
+  <a href="index.html#projects" class="nav-back">← Back to Projects</a>
+</nav>
+
+<div class="page-wrap">
+
+  <p class="project-eyebrow">Remote Sensing · Machine Learning · Water Quality · GIS</p>
+  <h1 class="project-h1">Karnaphuli River Estuary —<br/>Water Quality Assessment<br/>via Satellite &amp; ML</h1>
+  <p class="project-subtitle">Assessed heavy metal and physicochemical pollution in Bangladesh's most commercially significant coastal waterway by integrating Sentinel-2A satellite reflectance, laboratory water sampling, and machine learning regression models. Contamination hotspots were mapped spatially using GIS-based Kriging and satellite-predicted rasters.</p>
+
+  <div class="meta-row">
+    <div class="meta-item">
+      <label>Tools</label>
+      <div class="tool-pills">
+        <span class="tool-pill">Python</span>
+        <span class="tool-pill">Scikit-learn</span>
+        <span class="tool-pill">Google Earth Engine</span>
+        <span class="tool-pill">SNAP</span>
+        <span class="tool-pill">ArcGIS</span>
+        <span class="tool-pill">Kriging</span>
+        <span class="tool-pill">Google Colab</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <h2>Overview</h2>
+  <p>Industrial discharge, ship-breaking operations, and urban runoff have made the Karnaphuli River estuary one of the most environmentally stressed estuarine systems in South Asia. This project develops an integrated monitoring framework that combines in-situ laboratory water sampling, Sentinel-2A satellite reflectance, and machine learning regression modelling to assess physicochemical and heavy metal pollution across the estuary.</p>
+  <p>The research demonstrates that freely available multispectral satellite data, when combined with ground-truth measurements and proper statistical modelling, can predict 40–58% of spatial variability in key water quality parameters — a practical and scalable complement to costly conventional monitoring.</p>
+
+  <div class="context-box">
+    <p><strong style="color:var(--warm-brown)">Funding —</strong> Supported by CTRGC Grant CTRG-22-SHI.S-17, awarded by North South University for the quantitative assessment of heavy metals and eutrophication in the Sitakunda explosion site vicinity and the Karnaphuli River estuary.</p>
+  </div>
+
+  <hr/>
+
+  <!-- WHAT I DID -->
+  <h2>What I Did</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-icon">01</div>
+      <div class="step-body">
+        <p class="step-label">Field Sampling</p>
+        <p class="step-desc">Collected and georeferenced 50 water samples across the estuary; analysed for 14 heavy metals and 5 physicochemical parameters (pH, EC, TDS, TSS, turbidity) in the laboratory.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">02</div>
+      <div class="step-body">
+        <p class="step-label">Satellite Image Processing</p>
+        <p class="step-desc">Retrieved Sentinel-2A Level-2A imagery via Google Earth Engine and extracted spectral reflectance values at sampling locations using SNAP.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">03</div>
+      <div class="step-body">
+        <p class="step-label">Machine Learning Modelling</p>
+        <p class="step-desc">Trained and compared five regression models — Multiple Linear Regression, Ridge, Lasso, Support Vector Regression, and Principal Component Regression — with 10-fold cross-validation in Python.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">04</div>
+      <div class="step-body">
+        <p class="step-label">Spatial Mapping</p>
+        <p class="step-desc">Generated Kriging interpolation maps and regression-predicted rasters in ArcMap to visualise pollution distribution and identify contamination hotspots near the shipbreaking zone.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- MODEL PERFORMANCE TABLE -->
+  <h2>Regression Model Performance</h2>
+  <p>Parameters with R² ≥ 0.40 showed statistically significant satellite-based predictability. Sentinel-2A Bands 6–9 (red-edge and NIR) were the most consistently significant spectral predictors across parameters.</p>
+
+  <table class="perf-table">
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>R²</th>
+        <th>Predictability</th>
+        <th>Key Bands</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="best">
+        <td>Total Suspended Solids (TSS)</td>
+        <td class="r2">0.58</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:58%"></div></div></td>
+        <td>B6, B7, B8, B9, B11, B12</td>
+      </tr>
+      <tr>
+        <td>Cobalt (Co)</td>
+        <td class="r2">0.51</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:51%"></div></div></td>
+        <td>B6, B7, B8, B9</td>
+      </tr>
+      <tr>
+        <td>Turbidity</td>
+        <td class="r2">0.50</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:50%"></div></div></td>
+        <td>B6, B7, B8, B9, B11</td>
+      </tr>
+      <tr>
+        <td>Beryllium (Be)</td>
+        <td class="r2">0.49</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:49%"></div></div></td>
+        <td>B6, B8, B9</td>
+      </tr>
+      <tr>
+        <td>EC</td>
+        <td class="r2">0.47</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:47%"></div></div></td>
+        <td>B1, B7, B8</td>
+      </tr>
+      <tr>
+        <td>TDS</td>
+        <td class="r2">0.47</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:47%"></div></div></td>
+        <td>B1, B7, B8</td>
+      </tr>
+      <tr>
+        <td>Aluminum (Al)</td>
+        <td class="r2">0.46</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:46%"></div></div></td>
+        <td>B6, B8, B9</td>
+      </tr>
+      <tr>
+        <td>Iron (Fe)</td>
+        <td class="r2">0.45</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:45%"></div></div></td>
+        <td>B6, B8, B9</td>
+      </tr>
+      <tr>
+        <td>Manganese (Mn)</td>
+        <td class="r2">0.45</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:45%"></div></div></td>
+        <td>B6, B8, B9</td>
+      </tr>
+      <tr>
+        <td>Nickel (Ni)</td>
+        <td class="r2">0.45</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:45%"></div></div></td>
+        <td>B6, B7, B8, B9</td>
+      </tr>
+      <tr>
+        <td>pH</td>
+        <td class="r2">0.43</td>
+        <td><div class="r2-bar-wrap"><div class="r2-bar" style="width:43%"></div></div></td>
+        <td>B1, B6, B7, B8, B11</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.8rem; color:var(--text-muted); font-style:italic;">Parameters below R² = 0.40 (Cd, Pb, As, Hg, Zn, Cu) showed no statistically significant satellite-based predictions and were excluded from spatial mapping.</p>
+
+  <hr/>
+
+  <!-- SPATIAL MAPS -->
+  <h2>Spatial Distribution Maps</h2>
+  <p>Each map shows a side-by-side comparison: Kriging interpolation (left) reveals the spatial pattern of pollution based on field-measured concentrations, while the regression-predicted raster (right) extends those relationships across the full estuary using Sentinel-2A spectral data — showing where pollution is likely high even beyond sampled locations.</p>
+
+  <div class="map-block">
+    <p class="map-label">Physical Parameter — Total Suspended Solids (TSS) &nbsp;·&nbsp; R² = 0.58</p>
+    <img src="TSS.jpg" alt="Interpolation and regression maps of Total Suspended Solids across the Karnaphuli River Estuary"/>
+    <p class="map-caption">TSS concentrations range from 0.22 to 0.64 g/L — more than 3× the DoE Bangladesh inland industrial standard of 0.15 g/L. Elevated values are concentrated in the mid-estuary and shipbreaking zone.</p>
+  </div>
+
+  <div class="map-block">
+    <p class="map-label">Heavy Metal — Beryllium (Be) &nbsp;·&nbsp; R² = 0.49</p>
+    <img src="Be.jpg" alt="Interpolation and regression maps of Beryllium heavy metal concentration across the Karnaphuli River Estuary"/>
+    <p class="map-caption">Beryllium concentrations range from 0.053 to 0.11 mg/L, with the highest values near the industrialised upper estuary. The regression map captures spatial variability across the full river extent using Sentinel-2A reflectance.</p>
+  </div>
+
+  <hr/>
+
+  <!-- EXCEEDANCES -->
+  <h2>Key Findings — Pollution Exceedances</h2>
+  <p>Multiple parameters exceeded DoE Bangladesh (1997) standards for inland industrial use, with heavy metals reaching particularly alarming levels near the shipbreaking and industrial zones.</p>
+
+  <table class="exc-table">
+    <thead>
+      <tr><th>Parameter</th><th>Observed Average</th><th>Standard Limit</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Aluminum (Al)</td><td>12.8 mg/L</td><td>0.2 mg/L</td><td><span class="badge-warn">Exceeds</span></td></tr>
+      <tr><td>Iron (Fe)</td><td>15.5 mg/L</td><td>2 mg/L</td><td><span class="badge-warn">Exceeds</span></td></tr>
+      <tr><td>Copper (Cu)</td><td>2.56 mg/L</td><td>0.5 mg/L</td><td><span class="badge-warn">Exceeds</span></td></tr>
+      <tr><td>Mercury (Hg)</td><td>0.032 mg/L</td><td>0.01 mg/L</td><td><span class="badge-warn">Exceeds</span></td></tr>
+      <tr><td>Lead (Pb)</td><td>0.135 mg/L</td><td>0.1 mg/L</td><td><span class="badge-warn">Exceeds</span></td></tr>
+      <tr><td>TSS</td><td>0.47 g/L</td><td>0.15 g/L</td><td><span class="badge-warn">Exceeds</span></td></tr>
+      <tr><td>Turbidity</td><td>41.0 NTU</td><td>10 NTU</td><td><span class="badge-warn">Exceeds</span></td></tr>
+      <tr><td>TDS</td><td>10.8 g/L</td><td>1.7 g/L</td><td><span class="badge-warn">Exceeds</span></td></tr>
+      <tr><td>EC</td><td>21.4 mS/cm</td><td>12 mS/cm</td><td><span class="badge-warn">Exceeds</span></td></tr>
+      <tr><td>pH</td><td>7.9</td><td>6.5 – 8.5</td><td><span class="badge-ok">Within range</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="btn-row">
+    <a href="https://github.com/mahimatarana/Karnaphuli_Water_Quality_Prediction" target="_blank" class="btn-primary">View on GitHub →</a>
+    <a href="index.html#projects" class="btn-outline">← Back to Projects</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Mahima Yusuf Tarana &nbsp;·&nbsp; <a href="index.html">Home</a></p>
+</footer>
+</body>
+</html>

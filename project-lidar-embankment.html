@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Embankment Mapping with LiDAR , Mahima Yusuf Tarana</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream:#F5EFE4; --cream-light:#FBF7F1; --warm-brown:#5C3D2E;
+    --mid-brown:#8B5E3C; --teal:#2D6A6A; --teal-light:#3D8A8A;
+    --teal-pale:#E0F0EF; --sand:#C9A97A; --sand-light:#E8D5B5;
+    --dark:#2A1F14; --text-muted:#7A6652; --border:rgba(92,61,46,0.15);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream-light); color:var(--dark); line-height:1.7; }
+
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(251,247,241,0.93); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; height:62px; }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:var(--warm-brown); text-decoration:none; }
+  .nav-back { font-size:0.8rem; color:var(--teal); text-decoration:none; }
+  .nav-back:hover { text-decoration:underline; }
+
+  .page-wrap { max-width:900px; margin:0 auto; padding:8rem 2.5rem 5rem; }
+
+  /* HERO BLOCK */
+  .project-eyebrow { font-size:0.75rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); margin-bottom:0.75rem; }
+  .project-h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,4.5vw,3.6rem); font-weight:300; color:var(--warm-brown); line-height:1.08; margin-bottom:0.9rem; }
+  .project-subtitle { font-size:0.97rem; color:var(--text-muted); max-width:660px; font-weight:300; margin-bottom:2.25rem; }
+
+  /* META BAR */
+  .meta-row { display:flex; flex-wrap:wrap; gap:2.5rem; padding:1.4rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-bottom:3rem; }
+  .meta-item label { font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:0.25rem; }
+  .meta-item span { font-size:0.86rem; color:var(--dark); }
+  .tool-pills { display:flex; flex-wrap:wrap; gap:0.35rem; }
+  .tool-pill { font-size:0.72rem; padding:0.22rem 0.65rem; background:var(--teal-pale); color:var(--teal); border-radius:3px; }
+
+  /* STAT STRIP */
+  .stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:3rem; }
+  .stat-box { background:var(--cream); border:1px solid var(--sand-light); border-radius:10px; padding:1.2rem 1rem; text-align:center; }
+  .stat-box .num { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:600; color:var(--teal); line-height:1; }
+  .stat-box .lbl { font-size:0.74rem; color:var(--text-muted); margin-top:0.3rem; }
+
+  /* PLACEHOLDER IMG */
+  .placeholder-img { width:100%; height:250px; background:var(--cream); border:1px dashed var(--sand); border-radius:12px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.82rem; margin-bottom:2.5rem; }
+
+  /* CONTENT */
+  h2 { font-family:'Cormorant Garamond',serif; font-size:1.55rem; font-weight:600; color:var(--warm-brown); margin-bottom:0.85rem; margin-top:2.5rem; }
+  h3 { font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal); margin-bottom:0.6rem; margin-top:1.75rem; }
+  p { color:var(--text-muted); margin-bottom:0.9rem; font-weight:300; font-size:0.93rem; }
+  ul { list-style:none; padding:0; margin-bottom:1rem; }
+  ul li { padding:0.38rem 0 0.38rem 1.4rem; position:relative; color:var(--text-muted); font-size:0.9rem; font-weight:300; }
+  ul li::before { content:'→'; position:absolute; left:0; color:var(--teal); font-size:0.78rem; top:0.54rem; }
+  hr { border:none; border-top:1px solid var(--border); margin:2.5rem 0; }
+
+  /* PIPELINE */
+  .pipeline { display:flex; flex-direction:column; gap:0; margin:1.5rem 0; }
+  .pipe-step { display:flex; align-items:flex-start; gap:1.25rem; position:relative; }
+  .pipe-step:not(:last-child)::after { content:''; position:absolute; left:19px; top:40px; bottom:-1px; width:1px; background:var(--sand-light); }
+  .pipe-icon { width:40px; height:40px; border-radius:50%; background:var(--teal-pale); border:1.5px solid var(--teal); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.72rem; font-weight:500; color:var(--teal); z-index:1; }
+  .pipe-body { padding:0 0 2rem; flex:1; }
+  .pipe-tool { font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal); margin-bottom:0.2rem; }
+  .pipe-desc { font-size:0.87rem; color:var(--text-muted); font-weight:300; }
+
+  /* OUTPUT TABLE */
+  .output-table { width:100%; border-collapse:collapse; margin:1rem 0 1.5rem; font-size:0.83rem; }
+  .output-table th { text-align:left; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); padding:0.5rem 0.75rem; border-bottom:1px solid var(--sand-light); font-weight:400; }
+  .output-table td { padding:0.55rem 0.75rem; border-bottom:1px solid var(--border); color:var(--dark); vertical-align:top; }
+  .output-table td:first-child { color:var(--teal); font-weight:500; }
+  .output-table tr:last-child td { border-bottom:none; }
+
+  /* SCRIPT CARDS */
+  .script-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin:1.25rem 0; }
+  .script-card { background:var(--cream); border:1px solid var(--sand-light); border-radius:10px; padding:1.4rem; }
+  .script-card .filename { font-family:'DM Mono',monospace; font-size:0.78rem; color:var(--teal); margin-bottom:0.6rem; display:block; }
+  .script-card p { font-size:0.83rem; margin-bottom:0.6rem; }
+  .script-card ul li { font-size:0.82rem; }
+
+  /* ELEVATION TABLE */
+  .elev-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.75rem; margin:1rem 0; }
+  .elev-box { background:var(--cream); border:1px solid var(--sand-light); border-radius:8px; padding:0.9rem; text-align:center; }
+  .elev-box .val { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600; color:var(--warm-brown); line-height:1; }
+  .elev-box .lbl { font-size:0.7rem; color:var(--text-muted); margin-top:0.2rem; }
+
+  /* CONTEXT BOX */
+  .context-box { background:var(--cream); border-left:3px solid var(--teal); border-radius:0 8px 8px 0; padding:1.2rem 1.5rem; margin:1.5rem 0; }
+  .context-box p { margin:0; font-size:0.88rem; }
+
+  /* LINKS */
+  .btn-row { display:flex; flex-wrap:wrap; gap:1rem; margin-top:2.5rem; }
+  .btn-primary { display:inline-flex; align-items:center; gap:0.5rem; background:var(--warm-brown); color:#fff; padding:0.72rem 1.75rem; border-radius:6px; text-decoration:none; font-size:0.84rem; transition:background 0.2s; }
+  .btn-primary:hover { background:var(--mid-brown); }
+  .btn-outline { display:inline-flex; align-items:center; gap:0.5rem; border:1px solid var(--warm-brown); color:var(--warm-brown); padding:0.72rem 1.75rem; border-radius:6px; text-decoration:none; font-size:0.84rem; transition:all 0.2s; }
+  .btn-outline:hover { background:var(--warm-brown); color:#fff; }
+
+  footer { background:var(--warm-brown); color:var(--sand-light); text-align:center; padding:1.75rem; font-size:0.8rem; }
+  footer a { color:var(--sand); text-decoration:none; }
+
+  @media(max-width:680px){
+    .stat-strip { grid-template-columns:1fr 1fr; }
+    .script-grid { grid-template-columns:1fr; }
+    .elev-grid { grid-template-columns:1fr 1fr; }
+    .page-wrap { padding:6rem 1.25rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">M. Y. Tarana</a>
+  <a href="index.html#projects" class="nav-back">← Back to Projects</a>
+</nav>
+
+<div class="page-wrap">
+
+  <p class="project-eyebrow">LiDAR · DEM · R · Drone Survey · River Engineering</p>
+  <h1 class="project-h1">Embankment Mapping<br/>with LiDAR</h1>
+  <p class="project-subtitle">A complete, reproducible drone LiDAR pipeline for river embankment condition assessment , from raw point cloud to a spatially referenced database of 4,224 segments with elevation, crest width, and slope statistics at 100-metre resolution.</p>
+
+  <div class="meta-row">
+    <div class="meta-item">
+      <label>Tools</label>
+      <div class="tool-pills">
+        <span class="tool-pill">ArcGIS</span>
+        <span class="tool-pill">DJI Terra</span>
+        <span class="tool-pill">CloudCompare</span>
+        <span class="tool-pill">R / RStudio</span>
+        <span class="tool-pill">ET GeoWizards</span>
+        <span class="tool-pill">RTK GNSS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="placeholder-img">[ Add a DEM map, orthomosaic, or point cloud screenshot here ]</div>
+
+  <!-- OVERVIEW -->
+  <h2>Overview</h2>
+  <p>River embankments , locally called <em>polders</em> , are the primary flood defence across southwestern Bangladesh's coastal delta. This project builds a complete pipeline from raw drone LiDAR point clouds to a spatially referenced database of embankment condition metrics, with each 100-metre segment characterised by elevation, crest width, and slope statistics.</p>
+
+  <div class="context-box">
+    <p><strong style="color:var(--warm-brown)">Project Context ,</strong> This pipeline was developed as part of the SURF-IT project, whose end goal is an AI-driven early warning system for tidal surge. The embankment condition database feeds directly into that vulnerability assessment model.</p>
+  </div>
+
+  <hr/>
+
+  <!-- PIPELINE -->
+  <h2>Pipeline</h2>
+  <p>I executed this end-to-end geospatial workflow, from field drone deployment to a fully analysis-ready CSV and shapefile, under the constant guidance and supervision of <a href="https://scholar.google.com/citations?user=t57eWUkAAAAJ&hl=en" target="_blank" style="color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal);">Dr. Md. Farhadur Rahman</a>.</p>
+
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-icon">01</div>
+      <div class="pipe-body">
+        <p class="pipe-tool">Field · DJI Drone + RTK GNSS</p>
+        <p class="pipe-desc">Drone LiDAR surveys and RTK ground control across multiple grid areas in the study site.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">02</div>
+      <div class="pipe-body">
+        <p class="pipe-tool">DJI Terra</p>
+        <p class="pipe-desc">Reconstruction of 2D orthomosaic maps and 3D LiDAR point clouds from raw scan data.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">03</div>
+      <div class="pipe-body">
+        <p class="pipe-tool">CloudCompare</p>
+        <p class="pipe-desc">Point cloud cleaning , removing vegetation, structures, and noise , followed by DEM export at 50cm resolution.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">04</div>
+      <div class="pipe-body">
+        <p class="pipe-tool">ArcMap (ArcGIS Desktop)</p>
+        <p class="pipe-desc">DEM projection, clipping, and mosaicking; perpendicular cross-section generation at 100m intervals.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">05</div>
+      <div class="pipe-body">
+        <p class="pipe-tool">R · DEM_height_correction_manual.R</p>
+        <p class="pipe-desc">Sequential elevation correction using SRTM reference data and RTK ground-truth points.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">06</div>
+      <div class="pipe-body">
+        <p class="pipe-tool">R · Segment_data_analysis_stat_summary.R</p>
+        <p class="pipe-desc">Computes per-segment statistics , crest width, slope, and elevation , and outputs the final segment database.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- OUTPUT DATASET -->
+  <h2>Output Dataset</h2>
+  <p>The final <code style="font-family:'DM Mono',monospace; font-size:0.85em; background:var(--cream); padding:0.1rem 0.4rem; border-radius:3px; color:var(--teal);">Embankment_100m_segment_database</code> contains 4,224 georeferenced rows. Key field groups:</p>
+
+  <table class="output-table">
+    <thead>
+      <tr><th>Field Group</th><th>Columns</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Location</td><td>Long, Lat</td><td>Segment centroid coordinates</td></tr>
+      <tr><td>DEM Elevation</td><td>DEM_mean, DEM_median, DEM_p20, DEM_p80, DEM_min, DEM_max, DEM_sd</td><td>Elevation statistics from the corrected DEM (metres)</td></tr>
+      <tr><td>Crest Width</td><td>width_mean, width_median, width_p20 … width_sd</td><td>Euclidean distance between land-top and river-top boundary (metres)</td></tr>
+      <tr><td>River-side Slope</td><td>river_mean, river_medi, river_p20 … river_max</td><td>Slope angle toward the river (degrees)</td></tr>
+      <tr><td>Land-side Slope</td><td>land_mean, land_media, land_p20 … land_max</td><td>Slope angle toward the land (degrees)</td></tr>
+    </tbody>
+  </table>
+
+  <hr/>
+
+  <!-- R SCRIPTS -->
+  <h2>R Scripts</h2>
+  <div class="script-grid">
+    <div class="script-card">
+      <span class="filename">DEM_height_correction_manual.R</span>
+      <p>Corrects elevation offsets across LiDAR-derived DEM tiles using three sequential methods:</p>
+      <ul>
+        <li>SRTM correction , median dZ with top-25% trimming</li>
+        <li>RTK correction , centimetre-accurate per-tile offset</li>
+        <li>Overlap correction , for tiles without RTK coverage</li>
+      </ul>
+      <div style="margin-top:0.75rem;">
+        <span style="font-size:0.72rem; background:var(--teal-pale); color:var(--teal); padding:0.2rem 0.55rem; border-radius:3px;">terra</span>
+        <span style="font-size:0.72rem; background:var(--teal-pale); color:var(--teal); padding:0.2rem 0.55rem; border-radius:3px; margin-left:0.3rem;">sf</span>
+      </div>
+    </div>
+    <div class="script-card">
+      <span class="filename">Segment_data_analysis_stat_summary.R</span>
+      <p>Joins four cross-section intersection files and computes per-segment geometry and statistics:</p>
+      <ul>
+        <li>Width, vertical and horizontal distances</li>
+        <li>Slopes in degrees and percentage</li>
+        <li>Quality filtering + 7-point gap fill</li>
+      </ul>
+      <div style="margin-top:0.75rem;">
+        <span style="font-size:0.72rem; background:var(--teal-pale); color:var(--teal); padding:0.2rem 0.55rem; border-radius:3px;">dplyr</span>
+        <span style="font-size:0.72rem; background:var(--teal-pale); color:var(--teal); padding:0.2rem 0.55rem; border-radius:3px; margin-left:0.3rem;">zoo</span>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- DOCUMENTATION -->
+  <h2>Documentation</h2>
+  <p>The repository includes a full step-by-step processing manual (<code style="font-family:'DM Mono',monospace; font-size:0.85em; background:var(--cream); padding:0.1rem 0.4rem; border-radius:3px; color:var(--teal);">Drone_survey_and_data_processing_Manual_Mahima.docx</code>) covering drone field operations, DJI Terra processing, CloudCompare cleaning, ArcMap raster workflows, ET GeoWizards cross-section generation, and the full RStudio processing chain.</p>
+
+  <div class="btn-row">
+    <a href="https://github.com/mahimatarana/Embankment_mapping_with_LiDAR" target="_blank" class="btn-primary">View on GitHub →</a>
+    <a href="index.html#projects" class="btn-outline">← Back to Projects</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Mahima Yusuf Tarana &nbsp;·&nbsp; <a href="index.html">Home</a></p>
+</footer>
+</body>
+</html>
